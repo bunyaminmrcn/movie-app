@@ -28,6 +28,25 @@ const movies = [
         year: 1993
     }
 ]
+
+
+const directors = [
+    {
+        id: "1",
+        name: "John Doe",
+        birth: 1990
+    },
+    {
+        id: "2",
+        name: "Can Yetmez",
+        birth: 1980
+    },
+    {
+        id: "3",
+        name: "Json Stathom",
+        birth: 1960
+    },
+]
 const MovieType = new GraphQLObjectType({
     name: 'Movie',
     fields: () => ({
@@ -38,6 +57,14 @@ const MovieType = new GraphQLObjectType({
     })
 })
 
+const DirectorType = new GraphQLObjectType({
+    name: 'Director',
+    fields: () => ({
+        id: { type: GraphQLID },
+        name: { type: GraphQLString },
+        birth: { type: GraphQLInt },
+    })
+})
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQuery',
@@ -47,6 +74,13 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLID }},
             resolve: (parent, args) => {
                 return _.find(movies,{ id: args.id})
+            }
+        },
+        director: {
+            type: DirectorType,
+            args: { id: { type: GraphQLID }},
+            resolve: (parent, args) => {
+                return _.find(directors,{ id: args.id})
             }
         }
     }

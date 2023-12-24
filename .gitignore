@@ -6,3 +6,5 @@ server/package-lock.json
 
 client/yarn.lock
 client/package-lock.json
+
+*.DS_Store
