@@ -6,26 +6,30 @@ const movies = [
     {
         id: "1",
         title: 'title 1',
-        description:  'description 1',
-        year: 1993
+        description: 'description 1',
+        year: 1993,
+        directorId: "1"
     },
     {
         id: "2",
         title: 'title 2',
-        description:  'description 2',
-        year: 1993
+        description: 'description 2',
+        year: 1993,
+        directorId: "2"
     },
     {
         id: "3",
         title: 'title 3',
-        description:  'description 3',
-        year: 1993
+        description: 'description 3',
+        year: 1993,
+        directorId: "2"
     },
     {
         id: "4",
         title: 'title 4',
-        description:  'description 4',
-        year: 1993
+        description: 'description 4',
+        year: 1993,
+        directorId: "3"
     }
 ]
 
@@ -54,6 +58,13 @@ const MovieType = new GraphQLObjectType({
         title: { type: GraphQLString },
         description: { type: GraphQLString },
         year: { type: GraphQLInt },
+        director: {
+            type: DirectorType,
+            resolve(parent, args) {
+                console.log(parent)
+                return _.find(directors, { id: parent.directorId })
+            }
+        }
     })
 })
 
@@ -71,16 +82,16 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         movie: {
             type: MovieType,
-            args: { id: { type: GraphQLID }},
+            args: { id: { type: GraphQLID } },
             resolve: (parent, args) => {
-                return _.find(movies,{ id: args.id})
+                return _.find(movies, { id: args.id })
             }
         },
         director: {
             type: DirectorType,
-            args: { id: { type: GraphQLID }},
+            args: { id: { type: GraphQLID } },
             resolve: (parent, args) => {
-                return _.find(directors,{ id: args.id})
+                return _.find(directors, { id: args.id })
             }
         }
     }
