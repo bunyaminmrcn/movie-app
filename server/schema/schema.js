@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema, GraphQLID } = require('graphql')
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema, GraphQLID, GraphQLList } = require('graphql')
 const _ = require('lodash')
 
 
@@ -29,6 +29,13 @@ const movies = [
         title: 'title 4',
         description: 'description 4',
         year: 1993,
+        directorId: "3"
+    },
+    {
+        id: "5",
+        title: 'title 5',
+        description: 'description 5',
+        year: 1996,
         directorId: "3"
     }
 ]
@@ -74,6 +81,12 @@ const DirectorType = new GraphQLObjectType({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         birth: { type: GraphQLInt },
+        movies: {
+            type: new GraphQLList(MovieType),
+            resolve(parent, args) {
+                return _.filter(movies, { directorId: parent.id })
+            }
+        }
     })
 })
 
