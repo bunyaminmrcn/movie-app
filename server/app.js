@@ -1,7 +1,11 @@
 const express = require('express')
 const { graphqlHTTP } = require('express-graphql')
 
+const dotenv = require('dotenv')
 
+dotenv.config();
+
+const { run: mongoRun } = require('./db/setup')
 const schema = require('./schema/schema')
 /*
 var { buildSchema } = require("graphql")
@@ -29,4 +33,5 @@ app.use('/graphql', graphqlHTTP({
 }))
 app.listen(5005, () => {
     console.log('server listeing on 5005')
+    mongoRun();
 })
